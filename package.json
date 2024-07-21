@@ -1,0 +1,26 @@
+{
+  "name": "odin-weather-app",
+  "version": "1.0.0",
+  "description": "A mini project forming part of The Odin Project JavaScript course that focuses on making API calls and using asynchronous code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --watch",
+    "build": "webpack"
+  },
+  "keywords": [],
+  "author": "JE Richards (https://github.com/JE-Richards)",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/compat": "^1.1.1",
+    "@eslint/js": "^9.7.0",
+    "css-loader": "^7.1.2",
+    "eslint": "^9.7.0",
+    "eslint-plugin-react": "^7.35.0",
+    "globals": "^15.8.0",
+    "html-webpack-plugin": "^5.6.0",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.93.0",
+    "webpack-cli": "^5.1.4"
+  }
+}
