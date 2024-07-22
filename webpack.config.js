@@ -11,7 +11,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Listify',
+      title: 'Weather App',
       filename: 'index.html',
       inject: 'head',
       scriptLoading: 'defer',
