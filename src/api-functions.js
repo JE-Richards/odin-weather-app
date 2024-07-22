@@ -39,4 +39,39 @@ async function apiCall(location) {
   }
 }
 
-export default apiCall;
+function dataProcessor(json) {
+  const days = json.days;
+
+  const variables = [
+    'datetime',
+    'tempmax',
+    'tempmin',
+    'temp',
+    'feelslike',
+    'humidity',
+    'precipprob',
+    'preciptype',
+    'windspeed',
+    'cloudcover',
+    'uvindex',
+    'sunrise',
+    'sunset',
+    'conditions',
+    'icon',
+  ];
+
+  const weatherData = [];
+
+  // object -> array of key-value pairs -> filter by key for key in variables -> convert back to object -> push to array
+  days.forEach((element) => {
+    let subset = Object.fromEntries(
+      Object.entries(element).filter(([key]) => variables.includes(key))
+    );
+
+    weatherData.push(subset);
+  });
+
+  return weatherData;
+}
+
+export { apiCall, dataProcessor };
