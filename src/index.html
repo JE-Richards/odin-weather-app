@@ -5,5 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
-  <body></body>
+  <body>
+    <header>
+      <form id="user-input">
+        <label for="location-input" class="visually-hidden">Location</label>
+        <input
+          type="text"
+          name="location-input"
+          id="location-input"
+          minlength="1"
+          maxlength="100"
+          patten="[A-Za-z]+"
+        />
+        <button type="submit" form="user-input" class="submit-button">
+          TEMP
+        </button>
+      </form>
+    </header>
+  </body>
 </html>
