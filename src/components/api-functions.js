@@ -40,7 +40,7 @@ async function apiCall(location) {
 }
 
 function dataProcessor(json) {
-  const days = json.days;
+  const days = json.days.slice(0, 7);
 
   const variables = [
     'datetime',
@@ -58,9 +58,11 @@ function dataProcessor(json) {
     'sunset',
     'conditions',
     'icon',
+    'hours',
   ];
-
+  const dataArray = [];
   const weatherData = [];
+  const resolvedLocation = json.resolvedAddress;
 
   // object -> array of key-value pairs -> filter by key for key in variables -> convert back to object -> push to array
   days.forEach((element) => {
@@ -71,7 +73,8 @@ function dataProcessor(json) {
     weatherData.push(subset);
   });
 
-  return weatherData;
+  dataArray.push(resolvedLocation, weatherData);
+  return dataArray;
 }
 
 export { apiCall, dataProcessor };

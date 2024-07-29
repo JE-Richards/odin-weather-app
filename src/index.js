@@ -4,9 +4,11 @@ import {
   addInputEventListener,
   inputSubmitEventListener,
 } from './components/event-listeners';
+import { createForecastPageStructure } from './components/create-page-structure';
 
 addInputEventListener();
 inputSubmitEventListener();
+createForecastPageStructure('display');
 
 // for testing
 window.apiCall = apiCall;
