@@ -1,4 +1,6 @@
 import apiKey from './api-config';
+import { createErrorMsgPageStructure } from './create-page-structure';
+import { displayErrorMessage } from './display-controller';
 
 const key = apiKey;
 
@@ -15,19 +17,38 @@ async function apiCall(location) {
     } else {
       switch (response.status) {
         case 400:
-          throw new Error('(400) Bad Request');
+          createErrorMsgPageStructure('display');
+          displayErrorMessage(
+            '400 - Bad Request',
+            'The location submitted is invalid. Please ensure you have entered the location correctly and try submitting again.'
+          );
           break;
         case 401:
-          throw new Error('(401) Unauthorised - Invalid API key');
+          createErrorMsgPageStructure('display');
+          displayErrorMessage(
+            '401 - Unauthorised',
+            'There is a problem with the API key, account, or subscription. Please ensure you have used a valid API key before trying again.'
+          );
+          break;
+        case 404:
+          createErrorMsgPageStructure('display');
+          displayErrorMessage(
+            '404 - Not Found',
+            'The request cannot be matched to any valid API request endpoint structure.'
+          );
           break;
         case 429:
-          throw new Error(
-            '(429) Too Many Requests - Number of queries submitted exceeds your daily or monthly API plan limit'
+          createErrorMsgPageStructure('display');
+          displayErrorMessage(
+            '429 - Too Many Requests',
+            'The number of requests submitted exceeds your daily, or monthly, API plan limit.'
           );
           break;
         case 500:
-          throw new Error(
-            '(500) Internal Sever Error - Visual Crossing API server error'
+          createErrorMsgPageStructure('display');
+          displayErrorMessage(
+            '500 - Internal Sever Error',
+            'There is an error with the Visual Crossing API server. Please try again later.'
           );
           break;
         default:

@@ -189,4 +189,21 @@ function createForecastPageStructure(documentElementId) {
   container.appendChild(section);
 }
 
-export { createForecastPageStructure };
+function createErrorMsgPageStructure(documentElementId) {
+  const container = document.getElementById(documentElementId);
+  const msgWrapper = document.createElement('div');
+  const msgHeader = document.createElement('h1');
+  const msgDetails = document.createElement('p');
+
+  container.innerHTML = '';
+
+  msgWrapper.id = 'error-message';
+  msgHeader.id = 'error-header';
+  msgDetails.id = 'error-details';
+
+  msgWrapper.appendChild(msgHeader);
+  msgWrapper.appendChild(msgDetails);
+  container.appendChild(msgWrapper);
+}
+
+export { createForecastPageStructure, createErrorMsgPageStructure };

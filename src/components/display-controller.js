@@ -177,4 +177,12 @@ function displayForecastData(weatherArray, day) {
   displayHourlyForecast(weatherArray, day);
 }
 
-export { displayForecastData };
+function displayErrorMessage(errorCode, message) {
+  const header = document.getElementById('error-header');
+  const details = document.getElementById('error-details');
+
+  header.innerHTML = `Error ${errorCode}`;
+  details.innerHTML = message;
+}
+
+export { displayForecastData, displayErrorMessage };

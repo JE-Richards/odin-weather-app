@@ -75,6 +75,25 @@ main {
   background-color: var(--main-background-col);
 }
 
+/* Error Message Styling */
+#error-message {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
+}
+
+#error-header {
+  font-size: 60px;
+  font-weight: 700;
+}
+
+#error-details {
+  font-size: 20px;
+}
+
+/* Forecast Styling */
 /* Location Header */
 main h1 {
   font-size: 44px;
