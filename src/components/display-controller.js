@@ -1,5 +1,6 @@
 import { parseISO, format } from 'date-fns';
 import createSVG from './svg-icons';
+import { changeTemperatureScale, changeSpeedScale } from './change-scales';
 
 function displayLocationHeader(weatherArray) {
   const header = document.getElementById('location-name');
@@ -7,7 +8,7 @@ function displayLocationHeader(weatherArray) {
   header.innerHTML = weatherArray[0];
 }
 
-function displayDaysNav(weatherArray) {
+function displayDaysNav(weatherArray, temperatureScale) {
   const divId = [
     'day-zero',
     'day-one',
@@ -36,16 +37,32 @@ function displayDaysNav(weatherArray) {
     date.innerHTML = format(parsedDate, 'dd MMM yyyy');
 
     temperature.innerHTML = '';
-    temperature.innerHTML = `<span class='temperature'>${
-      forecastObj[dayId[i]].temp
-    }</span><span class='temperature-scale'>&#8451;</span>`;
+    switch (temperatureScale) {
+      case '℃':
+        temperature.innerHTML = `<span class='temperature-value'>${
+          forecastObj[dayId[i]].temp
+        }</span><span class='temperature-scale'>&#8451;</span>`;
+        break;
+      case '℉':
+        const temperatureValues = changeTemperatureScale(
+          forecastObj[dayId[i]].temp,
+          '℃'
+        );
+        temperature.innerHTML = `<span class='temperature-value'>${temperatureValues[0]}</span><span class='temperature-scale'>${temperatureValues[1]}</span>`;
+        break;
+      default:
+        temperature.innerHTML = `<span class='temperature-value'>${
+          forecastObj[dayId[i]].temp
+        }</span><span class='temperature-scale'>&#8451;</span>`;
+        break;
+    }
 
     icon.innerHTML = '';
     icon.innerHTML = createSVG(forecastObj[dayId[i]].icon);
   }
 }
 
-function displayTemperatureMetrics(weatherArray, day) {
+function displayTemperatureMetrics(weatherArray, day, temperatureScale) {
   const conditions = document.getElementById('conditions');
   const meanTemp = document.getElementById('mean-temp');
   const maxTemp = document.getElementById('max-temp');
@@ -57,20 +74,45 @@ function displayTemperatureMetrics(weatherArray, day) {
   conditions.innerHTML = forecastObj[day].conditions;
 
   meanTemp.innerHTML = '';
-  meanTemp.innerHTML = `<span class='temperature'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
-
   maxTemp.innerHTML = '';
-  maxTemp.innerHTML = `<span class='temperature'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
-
   minTemp.innerHTML = '';
-  minTemp.innerHTML = `<span class='temperature'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
+  switch (temperatureScale) {
+    case '℃':
+      meanTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+      maxTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
+      minTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
+      break;
+    case '℉':
+      const meanTempValues = changeTemperatureScale(forecastObj[day].temp, '℃');
+      const maxTempValues = changeTemperatureScale(
+        forecastObj[day].tempmax,
+        '℃'
+      );
+      const minTempValues = changeTemperatureScale(
+        forecastObj[day].tempmin,
+        '℃'
+      );
 
-  // this one needs to be reworked once we have icon svgs decided
+      meanTemp.innerHTML = `<span class='temperature-value'>${meanTempValues[0]}</span><span class='temperature-scale'>${meanTempValues[1]}</span>`;
+      maxTemp.innerHTML = `<span class='temperature-value'>${maxTempValues[0]}</span><span class='temperature-scale'>${maxTempValues[1]}</span>`;
+      minTemp.innerHTML = `<span class='temperature-value'>${minTempValues[0]}</span><span class='temperature-scale'>${minTempValues[1]}</span>`;
+      break;
+    default:
+      meanTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+      maxTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
+      minTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
+      break;
+  }
   weatherIcon.innerHTML = '';
   weatherIcon.innerHTML = createSVG(forecastObj[day].icon);
 }
 
-function displayWeatherMetrics(weatherArray, day) {
+function displayWeatherMetrics(
+  weatherArray,
+  day,
+  temperatureScale,
+  speedScale
+) {
   // select the element data container
   const feelsLikeTemp = document.querySelector(
     '#feels-like-temp > div > .element-data'
@@ -91,7 +133,21 @@ function displayWeatherMetrics(weatherArray, day) {
 
   // populate data
   feelsLikeTemp.innerHTML = '';
-  feelsLikeTemp.innerHTML = `<span class='temperature'>${forecastObj[day].feelslike}</span><span class='temperature-scale'>&#8451;</span>`;
+  switch (temperatureScale) {
+    case '℃':
+      feelsLikeTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].feelslike}</span><span class='temperature-scale'>&#8451;</span>`;
+      break;
+    case '℉':
+      const temperatureValues = changeTemperatureScale(
+        forecastObj[day].feelslike,
+        '℃'
+      );
+      feelsLikeTemp.innerHTML = `<span class='temperature-value'>${temperatureValues[0]}</span><span class='temperature-scale'>${temperatureValues[1]}</span>`;
+      break;
+    default:
+      feelsLikeTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].feelslike}</span><span class='temperature-scale'>&#8451;</span>`;
+      break;
+  }
 
   humidity.innerHTML = '';
   humidity.innerHTML = `${forecastObj[day].humidity}%`;
@@ -100,7 +156,18 @@ function displayWeatherMetrics(weatherArray, day) {
   rainChance.innerHTML = `${forecastObj[day].precipprob}%`;
 
   windSpeed.innerHTML = '';
-  windSpeed.innerHTML = `<span class='speed'>${forecastObj[day].windspeed}</span><span class='speed-scale'>mph</span>`;
+  switch (speedScale) {
+    case 'mph':
+      windSpeed.innerHTML = `<span class='speed-value'>${forecastObj[day].windspeed}</span><span class='speed-scale'>mph</span>`;
+      break;
+    case 'km/h':
+      const speedValues = changeSpeedScale(forecastObj[day].windspeed, 'mph');
+      windSpeed.innerHTML = `<span class='speed-value'>${speedValues[0]}</span><span class='speed-scale'>${speedValues[1]}</span>`;
+      break;
+    default:
+      windSpeed.innerHTML = `<span class='speed-value'>${forecastObj[day].windspeed}</span><span class='speed-scale'>mph</span>`;
+      break;
+  }
 
   uvIndex.innerHTML = '';
   uvIndex.innerHTML = forecastObj[day].uvindex;
@@ -115,7 +182,7 @@ function displayWeatherMetrics(weatherArray, day) {
   });
 }
 
-function displayHourlyForecast(weatherArray, day) {
+function displayHourlyForecast(weatherArray, day, temperatureScale) {
   const hours = [
     '00',
     '01',
@@ -162,7 +229,21 @@ function displayHourlyForecast(weatherArray, day) {
     time.innerHTML = formattedTime;
 
     meanTemp.innerHTML = '';
-    meanTemp.innerHTML = `<span class='temperature'>${hourlyData[i].temp}</span><span class='temperature-scale'></span>`;
+    switch (temperatureScale) {
+      case '℃':
+        meanTemp.innerHTML = `<span class='temperature-value'>${hourlyData[i].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+        break;
+      case '℉':
+        const temperatureValues = changeTemperatureScale(
+          hourlyData[i].temp,
+          '℃'
+        );
+        meanTemp.innerHTML = `<span class='temperature-value'>${temperatureValues[0]}</span><span class='temperature-scale'>${temperatureValues[1]}</span>`;
+        break;
+      default:
+        meanTemp.innerHTML = `<span class='temperature-value'>${hourlyData[i].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+        break;
+    }
 
     icon.innerHTML = '';
     icon.innerHTML = createSVG(hourlyData[i].icon);
@@ -170,11 +251,29 @@ function displayHourlyForecast(weatherArray, day) {
 }
 
 function displayForecastData(weatherArray, day) {
+  const speedToggle = document.getElementById('speed-toggle');
+  const temperatureToggle = document.getElementById('temperature-toggle');
+
+  let speedScale;
+  let temperatureScale;
+
+  if (speedToggle.checked) {
+    speedScale = 'km/h';
+  } else {
+    speedScale = 'mph';
+  }
+
+  if (temperatureToggle.checked) {
+    temperatureScale = '℉';
+  } else {
+    temperatureScale = '℃';
+  }
+
   displayLocationHeader(weatherArray);
-  displayDaysNav(weatherArray);
-  displayTemperatureMetrics(weatherArray, day);
-  displayWeatherMetrics(weatherArray, day);
-  displayHourlyForecast(weatherArray, day);
+  displayDaysNav(weatherArray, temperatureScale);
+  displayTemperatureMetrics(weatherArray, day, temperatureScale);
+  displayWeatherMetrics(weatherArray, day, temperatureScale, speedScale);
+  displayHourlyForecast(weatherArray, day, temperatureScale);
 }
 
 function displayErrorMessage(errorCode, message) {

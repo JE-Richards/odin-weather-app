@@ -28,7 +28,7 @@ function createDaysNav() {
 
     day.classList.add('nav-day');
     date.classList.add('nav-date');
-    temperature.classList.add('nav-temp');
+    temperature.classList.add('nav-temp', 'temperature');
     icon.classList.add('nav-icon');
     div.id = divId[i];
 
@@ -63,6 +63,14 @@ function createTemperatureMetrics() {
   for (let i = 0; i < temperatureElements.length; i += 1) {
     const div = document.createElement('div');
     div.id = temperatureElements[i];
+
+    if (
+      temperatureElements[i] === 'mean-temp' ||
+      temperatureElements[i] === 'max-temp' ||
+      temperatureElements[i] === 'min-temp'
+    ) {
+      div.classList.add('temperature');
+    }
     article.appendChild(div);
   }
 
@@ -95,6 +103,14 @@ function createWeatherMetrics() {
     const weatherElementWrapper = document.createElement('div');
     const weatherElementName = document.createElement('p');
     const weatherElementData = document.createElement('div');
+
+    if (weatherElements[i] === 'feels-like-temp') {
+      weatherElementData.classList.add('temperature');
+    }
+
+    if (weatherElements[i] === 'wind-speed') {
+      weatherElementData.classList.add('speed');
+    }
 
     containerDiv.id = weatherElements[i];
 
@@ -153,7 +169,7 @@ function createHourlyForecast() {
     container.classList.add('hours');
     container.setAttribute('data-hour', hours[i]);
     time.classList.add('hours-time');
-    meanTemp.classList.add('hours-temp');
+    meanTemp.classList.add('hours-temp', 'temperature');
     hourWeatherIcon.classList.add('hours-icon');
 
     container.appendChild(time);

@@ -3,12 +3,12 @@ import { apiCall, dataProcessor } from './components/api-functions';
 import {
   addInputEventListener,
   inputSubmitEventListener,
+  addToggleEventListeners,
 } from './components/event-listeners';
-import { createForecastPageStructure } from './components/create-page-structure';
 
 addInputEventListener();
 inputSubmitEventListener();
-createForecastPageStructure('display');
+addToggleEventListeners();
 
 // for testing
 window.apiCall = apiCall;

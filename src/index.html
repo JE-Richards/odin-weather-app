@@ -7,7 +7,6 @@
   </head>
   <body>
     <header>
-      <div id="logo"></div>
       <form id="user-input">
         <label for="location-input" class="visually-hidden">Location</label>
         <input
@@ -22,6 +21,24 @@
           TEMP
         </button>
       </form>
+      <div class="toggle-container">
+        <div class="toggle-switch-wrapper">
+          <p>&#8451;</p>
+          <label class="switch" for="temperature-toggle">
+            <input type="checkbox" id="temperature-toggle" />
+            <span class="slider"></span>
+          </label>
+          <p>&#8457;</p>
+        </div>
+        <div class="toggle-switch-wrapper">
+          <p>mph</p>
+          <label class="switch" for="speed-toggle">
+            <input type="checkbox" id="speed-toggle" />
+            <span class="slider"></span>
+          </label>
+          <p>km/h</p>
+        </div>
+      </div>
     </header>
     <main id="display" class="display"></main>
     <footer>
