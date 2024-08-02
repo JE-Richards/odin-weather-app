@@ -1,3 +1,3 @@
-const apiKey = '47AQT5ZP68W4W67KYKKTGX5CV';
+const apiKey = 'Your API Key here';
 
 export default apiKey;

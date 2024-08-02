@@ -29,6 +29,7 @@ function displayDaysNav(weatherArray, temperatureScale) {
     const temperature = document.querySelector(`#${divId[i]} .nav-temp`);
     const icon = document.querySelector(`#${divId[i]} .nav-icon`);
     const parsedDate = parseISO(forecastObj[dayId[i]].datetime);
+    const div = document.getElementById(divId[i]);
 
     day.innerHTML = '';
     day.innerHTML = format(parsedDate, 'EEEE');
@@ -59,6 +60,50 @@ function displayDaysNav(weatherArray, temperatureScale) {
 
     icon.innerHTML = '';
     icon.innerHTML = createSVG(forecastObj[dayId[i]].icon);
+
+    div.addEventListener('click', (event) => {
+      const data = weatherArray;
+
+      // use current target to ensure the id of the div the event listener is attached to is returned
+      // (the icon in the nav is contained in a div, so need to avoid that id being returned)
+      const targetDiv = event.currentTarget.id;
+      const speedToggle = document.getElementById('speed-toggle');
+      const temperatureToggle = document.getElementById('temperature-toggle');
+
+      let speedScale;
+      let temperatureScale;
+
+      if (speedToggle.checked) {
+        speedScale = 'km/h';
+      } else {
+        speedScale = 'mph';
+      }
+
+      if (temperatureToggle.checked) {
+        temperatureScale = '℉';
+      } else {
+        temperatureScale = '℃';
+      }
+
+      // use this array to get the correct index;
+      const divId = [
+        'day-zero',
+        'day-one',
+        'day-two',
+        'day-three',
+        'day-four',
+        'day-five',
+        'day-six',
+      ];
+
+      // find the index as it will correspond to the correct day within our data
+      const i = divId.indexOf(targetDiv);
+
+      // refresh the display with the correct days data
+      displayTemperatureMetrics(data, i, temperatureScale);
+      displayWeatherMetrics(data, i, temperatureScale, speedScale);
+      displayHourlyForecast(data, i, temperatureScale);
+    });
   }
 }
 
