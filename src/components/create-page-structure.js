@@ -30,6 +30,7 @@ function createDaysNav() {
     date.classList.add('nav-date');
     temperature.classList.add('nav-temp', 'temperature');
     icon.classList.add('nav-icon');
+    div.classList.add('nav-item');
     div.id = divId[i];
 
     div.appendChild(day);

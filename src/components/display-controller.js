@@ -123,9 +123,9 @@ function displayTemperatureMetrics(weatherArray, day, temperatureScale) {
   minTemp.innerHTML = '';
   switch (temperatureScale) {
     case '℃':
-      meanTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
-      maxTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
-      minTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
+      meanTemp.innerHTML = `Mean: <span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+      maxTemp.innerHTML = `Max: <span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
+      minTemp.innerHTML = `Min: <span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
       break;
     case '℉':
       const meanTempValues = changeTemperatureScale(forecastObj[day].temp, '℃');
@@ -138,14 +138,14 @@ function displayTemperatureMetrics(weatherArray, day, temperatureScale) {
         '℃'
       );
 
-      meanTemp.innerHTML = `<span class='temperature-value'>${meanTempValues[0]}</span><span class='temperature-scale'>${meanTempValues[1]}</span>`;
-      maxTemp.innerHTML = `<span class='temperature-value'>${maxTempValues[0]}</span><span class='temperature-scale'>${maxTempValues[1]}</span>`;
-      minTemp.innerHTML = `<span class='temperature-value'>${minTempValues[0]}</span><span class='temperature-scale'>${minTempValues[1]}</span>`;
+      meanTemp.innerHTML = `Mean: <span class='temperature-value'>${meanTempValues[0]}</span><span class='temperature-scale'>${meanTempValues[1]}</span>`;
+      maxTemp.innerHTML = `Max: <span class='temperature-value'>${maxTempValues[0]}</span><span class='temperature-scale'>${maxTempValues[1]}</span>`;
+      minTemp.innerHTML = `Min: <span class='temperature-value'>${minTempValues[0]}</span><span class='temperature-scale'>${minTempValues[1]}</span>`;
       break;
     default:
-      meanTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
-      maxTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
-      minTemp.innerHTML = `<span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
+      meanTemp.innerHTML = `Mean: <span class='temperature-value'>${forecastObj[day].temp}</span><span class='temperature-scale'>&#8451;</span>`;
+      maxTemp.innerHTML = `Max: <span class='temperature-value'>${forecastObj[day].tempmax}</span><span class='temperature-scale'>&#8451;</span>`;
+      minTemp.innerHTML = `Min: <span class='temperature-value'>${forecastObj[day].tempmin}</span><span class='temperature-scale'>&#8451;</span>`;
       break;
   }
   weatherIcon.innerHTML = '';
